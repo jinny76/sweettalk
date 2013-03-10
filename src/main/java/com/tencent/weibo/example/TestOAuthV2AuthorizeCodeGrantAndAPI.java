@@ -1,5 +1,8 @@
 package com.tencent.weibo.example;
 
+import com.google.gson.Gson;
+import com.jbolt.sweettalk.domain.qq.Article;
+import com.jbolt.sweettalk.message.qq.HomeTimelineMsg;
 import com.tencent.weibo.api.FriendsAPI;
 import com.tencent.weibo.api.InfoAPI;
 import com.tencent.weibo.api.PrivateAPI;
@@ -74,6 +77,15 @@ public class TestOAuthV2AuthorizeCodeGrantAndAPI {
         }
     }
 
+    private void testJson() {
+        Gson gson = new Gson();
+
+        String json =
+            "[{\"city_code\":\"\",\"count\":0,\"country_code\":\"1\",\"emotiontype\":0,\"emotionurl\":\"\",\"from\":\"腾讯微博\",\"fromurl\":\"http:\\/\\/t.qq.com\\u000a\",\"geo\":\"\",\"head\":\"http:\\/\\/app.qlogo.cn\\/mbloghead\\/bb06168cd2b4175ca84c\",\"id\":\"189109072956619\",\"image\":null,\"isrealname\":2,\"isvip\":0,\"jing\":\"0\",\"latitude\":\"0\",\"location\":\"中国\",\"longitude\":\"0\",\"mcount\":0,\"music\":null,\"name\":\"jinny76\",\"nick\":\"悦瓣子\",\"openid\":\"09DBFB8C953A11CE38B44C13D23DAB23\",\"origtext\":\"继频繁蓝屏后，本人爱机今天突然白屏了，症状为鼠标键盘无响应，显示器显示纯白色，无法恢复，重启可以解决，��人知道是肿么了么？\",\"province_code\":\"31\",\"self\":0,\"source\":null,\"status\":0,\"text\":\"继频繁蓝屏后，本人爱机今天突然白屏了，症状为鼠标键盘无响应，显示器显示纯白色，无法恢复，重启可以解决，有人知道是肿么了么？\",\"timestamp\":1362906382,\"type\":1,\"video\":null,\"wei\":\"0\"}]";
+        Article[] article = gson.fromJson(json, Article[].class);
+        System.out.println("article = " + article);
+    }
+
     private void testDoc() {
         String response;
         String format = "json";
@@ -129,6 +141,9 @@ public class TestOAuthV2AuthorizeCodeGrantAndAPI {
                 .userTimeline(oAuth, format, pageflag, pagetime, reqnum, lastid, name, fopenid, type, contenttype);*/
 
             System.out.println("json = " + json);
+            Gson gson = new Gson();
+            HomeTimelineMsg msg = gson.fromJson(json, HomeTimelineMsg.class);
+            System.out.println("msg = " + msg);
 
             statusesAPI.shutdownConnection();
 
